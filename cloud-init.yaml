@@ -1,0 +1,20 @@
+#cloud-config
+
+packages:
+  - fail2ban
+  - ufw
+  - docker.io
+  - vim
+  - unattended-upgrades
+  - logwatch
+  - mailutils
+  - git
+  - docker-compose
+  - apache2-utils
+package_update: true
+package_upgrade: true
+runcmd:
+
+  # Enable firewall and open traffic
+  - ufw allow OpenSSH
+  - ufw enable
