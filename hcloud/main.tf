@@ -8,6 +8,7 @@ terraform {
 }
 
 variable "hcloud_token" {}
+variable "server_type" {}
 
 provider "hcloud" {
   # Configuration options
@@ -55,7 +56,7 @@ resource "hcloud_firewall" "firewall1" {
 resource "hcloud_server" "node1" {
   name = "node1"
   image = "ubuntu-20.04"
-  server_type = "cpx11"
+  server_type = "${var.server_type}"
   backups = true
   ssh_keys = [ hcloud_ssh_key.default.id ]
   firewall_ids = [hcloud_firewall.firewall1.id]
@@ -65,13 +66,13 @@ resource "hcloud_server" "node1" {
   depends_on = [
     hcloud_network_subnet.subnet
   ]
-  user_data = "${file("./cloud-init.yaml")}"
+  user_data = "${file("../cloud-init.yaml")}"
 
 }
 resource "hcloud_server" "node2" {
   name = "node2"
   image = "ubuntu-20.04"
-  server_type = "cpx11"
+  server_type = "${var.server_type}"
   backups = true
   ssh_keys = [ hcloud_ssh_key.default.id ]
   firewall_ids = [hcloud_firewall.firewall1.id]
@@ -81,12 +82,12 @@ resource "hcloud_server" "node2" {
   depends_on = [
     hcloud_network_subnet.subnet
   ]
-  user_data = "${file("./cloud-init.yaml")}"
+  user_data = "${file("../cloud-init.yaml")}"
 }
 resource "hcloud_server" "node3" {
   name = "node3"
   image = "ubuntu-20.04"
-  server_type = "cpx11"
+  server_type = "${var.server_type}"
   backups = true
   ssh_keys = [ hcloud_ssh_key.default.id ]
   firewall_ids = [hcloud_firewall.firewall1.id]
@@ -96,7 +97,7 @@ resource "hcloud_server" "node3" {
   depends_on = [
     hcloud_network_subnet.subnet
   ]
-  user_data = "${file("./cloud-init.yaml")}"
+  user_data = "${file("../cloud-init.yaml")}"
 }
 
 # reverse dns resources
